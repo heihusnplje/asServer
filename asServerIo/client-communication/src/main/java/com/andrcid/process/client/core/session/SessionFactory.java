@@ -1,0 +1,51 @@
+package com.andrcid.process.client.core.session;
+
+import com.andrcid.process.client.core.message.MessageWaitProcessor;
+
+import io.netty.channel.ChannelHandlerContext;
+
+public final class SessionFactory {
+	
+	private static volatile ISession SESSION;
+	
+	/**
+	 * 获得Session对象
+	 * @return ISession
+	 */
+	public static ISession getSession() {
+		return SESSION;
+	}
+
+	/**
+	 * 创建Session
+	 * @param ctx - ChannelHandlerContext
+	 * @param deviceId - 设备ID
+	 * @return ISession
+	 */
+	public static ISession buildSession(ChannelHandlerContext ctx , String deviceId) {
+		synchronized(SessionFactory.class) {
+			if(SESSION != null) {
+				SESSION.close();//调用关闭操作
+			}
+			//开启新的Session
+			SESSION = new DefaultSession(ctx, deviceId);
+		}
+		return SESSION;
+	}
+	
+	/**
+	 * 移除当前的session
+	 * @return boolean
+	 */
+	static boolean removeSession() {
+		SESSION = null;
+		//移除session的时候，顺便清空一下等待消息
+		MessageWaitProcessor.clearAllEvent();
+		return true;
+	}
+	
+	private SessionFactory() {
+		
+	}
+
+}

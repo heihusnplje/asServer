@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test
+    username: root
+    password: root
+    maxActive: 10
+    minIdle: 5
+    initialSize: 5
+    maxWait: 10000
+    timeBetweenEvictionRunsMillis: 30000
+    minEvictableIdleTimeMillis: 180000
+    connectionProperties: useUnicode=true;characterEncoding=utf8;connectTimeout=5000;socketTimeout=60000;autoReconnect=true;failOverReadOnly=false;useSSL=false
+    validationQuery: select 1
+    #connectionInitSqls: set names utf8mb4;
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    logSlowSql: true
+    slowSqlMillis: 1000
+    mergeSql: true
+  jpa:
+    generate-ddl: false #启动的时候是否自动生成dll语句
+    show-sql: false
+    database-platform : org.hibernate.dialect.MySQLDialect
+    hibernate.ddl-auto : none
+    hibernate.naming.physical-strategy : org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    
+#日志
+logging:
+  path: /opt/backend/asServer/logs
+  level:
+    com.tigerjoys.onion.pcserver.inter.dao: NO
+    druid.sql: DEBUG
+    druid.sql.DataSource: INFO
+    druid.sql.Connection: INFO
+    druid.sql.Statement: DEBUG
+    druid.sql.ResultSet: INFO
+  

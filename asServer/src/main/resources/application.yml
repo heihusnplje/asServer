@@ -1,0 +1,29 @@
+application:
+  name: asServer
+
+server:
+  port: 8080
+  context-path: /
+  session:
+    timeout: 7200
+    cookie:
+      name: JSESSION
+  
+#数据库
+
+spring:
+  profiles:
+    active: $[profiles.active]
+  mvc:
+    favicon:
+      enable: false
+  multipart:
+    max-file-size: 10Mb
+    max-request-size: 10Mb
+    
+socket: 
+  server:
+    enable: true
+    port: 9527
+    basePackages: com.tigerjoys.onion.pcserver.command
+    
